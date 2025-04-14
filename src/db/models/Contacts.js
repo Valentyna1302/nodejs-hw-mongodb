@@ -1,6 +1,6 @@
 import { model, Schema } from 'mongoose';
 import { typeList } from '../../constants/contacts.js';
-import { handleSaveError } from './hooks.js';
+import { handleSaveError, setUpdateSettings } from './hooks.js';
 
 const contactsSchema = new Schema(
   {
@@ -33,11 +33,7 @@ const contactsSchema = new Schema(
 
 contactsSchema.post('save', handleSaveError);
 
-contactsSchema.pre('findOneAndUpdate', function (next) {
-  this.options.new = true;
-  this.options.runValidators = true;
-  next();
-});
+contactsSchema.pre('findOneAndUpdate', setUpdateSettings);
 
 contactsSchema.post('findOneAndUpdate', handleSaveError);
 
