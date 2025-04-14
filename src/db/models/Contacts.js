@@ -1,5 +1,6 @@
 import { model, Schema } from 'mongoose';
 import { typeList } from '../../constants/contacts.js';
+import { handleSaveError } from './hooks.js';
 
 const contactsSchema = new Schema(
   {
@@ -30,9 +31,14 @@ const contactsSchema = new Schema(
   },
 );
 
-contactsSchema.post('save', (error, doc, next) => {
-  error.status = 400;
+contactsSchema.post('save', handleSaveError);
+
+contactsSchema.pre('findOneAndUpdate', function (next) {
+  this.options.new = true;
+  this.options.runValidators = true;
   next();
 });
+
+contactsSchema.post('findOneAndUpdate', handleSaveError);
 
 export const ContactsColection = model('contacts', contactsSchema);
