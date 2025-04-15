@@ -37,4 +37,4 @@ contactsSchema.pre('findOneAndUpdate', setUpdateSettings);
 
 contactsSchema.post('findOneAndUpdate', handleSaveError);
 
-export const ContactsColection = model('contacts', contactsSchema);
+export const ContactsCollection = model('contacts', contactsSchema);
