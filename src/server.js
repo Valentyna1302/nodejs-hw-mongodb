@@ -3,7 +3,7 @@ import express from 'express';
 import pino from 'pino-http';
 import { errorHandler } from './middlewares/errorHandler.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
-import contactsRouter from './routers/contacts.js';
+import router from './routers/index.js';
 import { getEnvVar } from './utils/getEnvVar.js';
 
 const PORT = Number(getEnvVar('PORT', 3001));
@@ -22,7 +22,7 @@ export const setupServer = () => {
     }),
   );
 
-  app.use(contactsRouter);
+  app.use(router);
 
   app.use('*', notFoundHandler);
 
